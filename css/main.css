@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(18, 18, 19);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.board-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.board-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(58, 58, 60);
+  width: 60px;
+  height: 60px;
+}
+
+.keyboard-wrapper {
+  margin-top: 20px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.keyboard-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(129, 131, 132);
+  width: 45px;
+  height: 60px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+.keyboard-column.wide {
+  /* wide 클래스 붙은 키 전용 스타일 */
+  min-width: 70px;
+  font-size: 12px;
+}
+
+.keyboard-column.wide img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  filter: brightness(0) invert(1); /*→ 흰색으로 보이게*/
+}
