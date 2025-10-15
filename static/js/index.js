@@ -1,4 +1,4 @@
-const answer = "LEMON";
+// const answer = "LEMON";
 
 let attempt = 0;
 let index = 0;
@@ -25,8 +25,14 @@ function appStart() {
     index = 0;
   };
 
-  const handleEnterKey = () => {
+  const handleEnterKey = async () => {
     let correctAnswers = 0;
+    const res = await fetch("/answer");
+    console.log("res : ", res);
+    const answer_object = await res.json(); // parsing
+    console.log("answer_object : ", answer_object);
+    const result = answer_object.answer; // "키(key) - 값(value)"
+    console.log("result : ", result);
 
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
@@ -34,12 +40,12 @@ function appStart() {
       );
 
       const input_text = block.innerText;
-      const answer_text = answer[i];
+      const answer_text = result[i];
 
       if (input_text === answer_text) {
         correctAnswers += 1;
         block.style.background = "#6AAA64";
-      } else if (answer.includes(input_text))
+      } else if (result.includes(input_text))
         block.style.background = "#C9B458";
       else block.style.background = "#787c7e";
     }
