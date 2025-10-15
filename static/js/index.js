@@ -17,6 +17,19 @@ function appStart() {
     window.removeEventListener("keydown", handlKeydown);
     displayGameOver();
     clearInterval(timer);
+
+    confetti({
+      particleCount: 150, // 터지는 조각의 수 (기본 50개)
+      spread: 90, // 폭죽이 퍼지는 각도 (0-360, 기본 45)
+      startVelocity: 40, // 시작 속도 (기본 30)
+      scalar: 1.2, // 조각 크기 스케일 (기본 1)
+      ticks: 300, // 애니메이션 지속 시간 (밀리초, 기본 200)
+      origin: {
+        // 폭죽이 터지는 시작 지점
+        x: 0.5, // 화면 가로 중앙 (0.0 - 1.0)
+        y: 0.8, // 화면 하단에서 약간 위 (0.0 - 1.0)
+      },
+    });
   };
 
   const nextLine = () => {
