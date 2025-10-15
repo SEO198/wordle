@@ -25,14 +25,53 @@ function appStart() {
     index = 0;
   };
 
+  // ---------- [키보드 클릭 이벤트 추가] -------------
+  const handleKeyboardClick = (event) => {
+    // 1. 클릭된 요소에서 data-key 속성값을 가져옴
+    const keyboardColumn = event.target.closest(".keyboard-column");
+
+    if (!keyboardColumn) return;
+
+    const keyUpper = keyboardColumn.dataset.key;
+
+    // A. Backspace 처리
+    if (keyUpper === "BACK") {
+      if (index > 0) {
+        index -= 1;
+        const blockToClear = document.querySelector(
+          `.board-column[data-index='${attempt}${index}']`
+        );
+        handleBackspace(blockToClear);
+      }
+      return;
+
+      // B. Enter 처리
+    } else if (keyUpper === "ENTER") {
+      if (index === 5) {
+        handleEnterKey();
+      }
+      return;
+    }
+
+    // C. 문자 입력 처리 (data-key가 알파벳인 경우: 길이가 1이고, ENTER/BACK이 아닌 모든 경우)
+    if (index < 5 && keyUpper.length === 1) {
+      // ENTER/BACK이 아닌 1글자짜리 키는 모두 알파벳입니다.
+      const thisBlock = document.querySelector(
+        `.board-column[data-index='${attempt}${index}']`
+      );
+
+      thisBlock.innerText = keyUpper; // keyUpper는 이미 대문자입니다.
+      index += 1;
+    }
+  };
+
+  // ---------------------------------------------------------------
+
   const handleEnterKey = async () => {
     let correctAnswers = 0;
     const res = await fetch("/answer");
-    console.log("res : ", res);
     const answer_object = await res.json(); // parsing
-    console.log("answer_object : ", answer_object);
     const result = answer_object.answer; // "키(key) - 값(value)"
-    console.log("result : ", result);
 
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
@@ -114,6 +153,14 @@ function appStart() {
     // 주기성
     timer = setInterval(setTime, 1000);
   };
+
+  // -------------------------------------------------------------------
+  // [마우스 클릭 이벤트 리스너 추가]
+  const keyboard = document.querySelector(".keyboard-wrapper");
+  if (keyboard) {
+    keyboard.addEventListener("click", handleKeyboardClick);
+  }
+  // -------------------------------------------------------------------
 
   startTimer();
   window.addEventListener("keydown", handlKeydown);
